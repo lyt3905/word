@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="cn.edu.bistu.cs.se.myapplication.MainActivity">
+    <item
+            android:id="@+id/add"
+            android:orderInCategory="100"
+            android:title="增加新词"
+            app:showAsAction="never" />
+
+    <item
+            android:id="@+id/search"
+            android:orderInCategory="100"
+            android:title="查找单词"
+            app:showAsAction="never" />
+
+    <item
+            android:id="@+id/help"
+            android:orderInCategory="100"
+            android:title="这是帮助"
+            app:showAsAction="never" />
+</menu>
