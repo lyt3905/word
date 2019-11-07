@@ -5,24 +5,37 @@
         android:layout_height="wrap_content">
 
     <EditText
-            android:id="@+id/username"
+            android:id="@+id/word"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
+            android:hint="单词"
             android:layout_marginBottom="4dp"></EditText>
 
     <EditText
-            android:id="@+id/password"
-            android:inputType="textPassword"
+            android:id="@+id/word_mean"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:hint="单词释义"
+            android:layout_marginBottom="4dp"></EditText>
+
+    <EditText
+            android:id="@+id/example_sentence"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
+            android:hint="例句"
             android:layout_marginBottom="16dp"
+            android:lines="2"
             android:fontFamily="sans-serif"></EditText>
 
 </LinearLayout>
