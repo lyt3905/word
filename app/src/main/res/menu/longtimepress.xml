@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.example.contextmenu.MainActivity" >
+
+    <item
+            android:id="@+id/edit"
+            android:orderInCategory="100"
+
+            android:title="编辑"/>
+    <item
+            android:id="@+id/delete"
+            android:orderInCategory="100"
+
+            android:title="删除"/>
+
+
+</menu>
