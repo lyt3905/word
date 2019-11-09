@@ -2,6 +2,8 @@ package cn.edu.bistu.cs.se.myapplication;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -34,6 +36,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private MyDataBaseHelper dbHelper;
     private SQLiteDatabase sqlDB ;
+    private boolean isTwoPane;
     EditText et;
     ArrayList<Map<String, Object>> result;
     ListView listView;
@@ -44,6 +47,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Configuration mConfiguration = this.getResources().getConfiguration(); //获取设置的配置信息
+        int ori = mConfiguration.orientation; //获取屏幕方向
+        if (ori == mConfiguration.ORIENTATION_LANDSCAPE) {
+            //横屏
+            isTwoPane = true;
+            System.out.println("isTwoPane = true");
+
+        } else if (ori == mConfiguration.ORIENTATION_PORTRAIT) {
+            //竖屏
+            isTwoPane = false;
+            System.out.println("isTwoPane = false");
+
+        }
+
+
+
+
         dbHelper =new MyDataBaseHelper(MainActivity.this,
                 "myDict.db3", 1);;
         sqlDB = dbHelper.getReadableDatabase();;
@@ -51,6 +71,30 @@ public class MainActivity extends AppCompatActivity {
         firstListview();
         registerForContextMenu(listView);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Map map=result.get(i);
+                final int id=(int)map.get("id");
+                String word=map.get("word")+"";
+                String mean_word=map.get("mean_word")+"";
+                String example_sentence=map.get("example_sentence")+"";
+                if (isTwoPane) {
+                    TextView wordtext=findViewById(R.id.word);
+                    TextView word_meantext=findViewById(R.id.word_mean);
+                    TextView example_sentencetext=findViewById(R.id.example_sentence);
+
+                    wordtext.setText(word);
+                    word_meantext.setText(mean_word);
+                    example_sentencetext.setText(example_sentence);
+
+                } else {
+
+                    ContentActivity.actionStart(MainActivity.this, word,mean_word,example_sentence);
+
+                }
+            }
+        });
 
         //长按与短按操作
        /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
