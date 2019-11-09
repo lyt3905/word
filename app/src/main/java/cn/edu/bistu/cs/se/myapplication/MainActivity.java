@@ -49,9 +49,11 @@ public class MainActivity extends AppCompatActivity {
         sqlDB = dbHelper.getReadableDatabase();;
         listView = (ListView) findViewById(R.id.listView1);
         firstListview();
-       // registerForContextMenu(listView);
+        registerForContextMenu(listView);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        //长按与短按操作
+       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Map map=result.get(i);
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+*/
 
         /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            @Override
@@ -222,17 +224,86 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-
-        final int position=(int)(menuInfo.position);
-        final int id=(int)(menuInfo.id);
+        long i=menuInfo.id;
+        Map map=result.get((int)i);
+        final int id=(int)map.get("id");
+        String word=map.get("word")+"";
+        String mean_word=map.get("mean_word")+"";
+        String example_sentence=map.get("example_sentence")+"";
         switch (item.getItemId()) {
             case R.id.edit:
-                System.out.println("position="+position);
                 System.out.println("id="+id);
+                System.out.println("word="+word);
+                System.out.println("mean_word="+mean_word);
+                System.out.println("example_sentence="+example_sentence);
+
+                android.app.AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                final LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+                final View view_custom = inflater.inflate(R.layout.add, null,false);
+                final EditText wordet =view_custom.findViewById(R.id.word);
+                final EditText mean_wordet=view_custom.findViewById(R.id.word_mean);
+                final EditText example_sentenceet =view_custom.findViewById(R.id.example_sentence);
+
+                wordet.setText(word);
+                mean_wordet.setText(mean_word);
+                example_sentenceet.setText(example_sentence);
+                builder.setView(view_custom);
+                builder.setCancelable(true);
+                builder.setTitle("修改单词");
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+
+                        String strword = wordet.getText().toString();
+                        String strword_mean = mean_wordet.getText().toString();
+                        String strexample_sentence=example_sentenceet.getText().toString();
+
+                        sqlDB.execSQL("update dict set word =? , mean_word =? , example_sentence =? where _id = ? ",
+                                new Object[] {strword, strword_mean, strexample_sentence,id});
+                        System.out.println("after-id="+id);
+                        System.out.println("after-strword="+strword);
+                        System.out.println("after-strword_mean="+strword_mean);
+                        System.out.println("after-strexample_sentence="+strexample_sentence);
+                        Toast.makeText(getApplicationContext(), "修改成功", Toast.LENGTH_LONG)
+                                .show();
+                        firstListview();
+
+
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
+                AlertDialog alert=builder.create();
                 break;
 
             case R.id.delete:
 
+                TextView textView=new TextView(MainActivity.this);
+                textView.setTextSize(20);
+                textView.setText("即将删除的单词为  "+word);
+
+                android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
+                builder1.setTitle("删除确认");
+                builder1.setView(textView);
+                builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sqlDB.execSQL("delete from dict where _id=?",
+                                new String[]{id+""});
+                        firstListview();
+                        Toast.makeText(MainActivity.this,"删除成功",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder1.setNegativeButton("取消",null);
+                builder1.show();
+                AlertDialog alert1=builder1.create();
 
                 break;
             default:
