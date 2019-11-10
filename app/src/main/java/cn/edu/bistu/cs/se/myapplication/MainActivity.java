@@ -41,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Map<String, Object>> result;
     ListView listView;
     @Override
+    protected void onRestart() {
+            firstListview();
+        super.onRestart();
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
