@@ -1,4 +1,4 @@
-package cn.edu.bistu.cs.se.myapplication;
+package cn.edu.bistu.cs.se.testfragment;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -7,13 +7,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import cn.edu.bistu.cs.se.testfragment.db.MyDataBaseHelper;
+
 public class MyContentProvider extends ContentProvider {
 
     public static final int WORD_DIR = 0;
 
     public static final int WORD_ITEM = 1;
 
-    public static final String AUTHORITY = "cn.edu.bistu.cs.se.myapplication.provider";
+    public static final String AUTHORITY = "cn.edu.bistu.cs.se.testfragment.provider";
 
     private static UriMatcher uriMatcher;
 
@@ -81,7 +83,7 @@ public class MyContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         // TODO: Implement this to initialize your content provider on startup.
-        dbHelper = new MyDataBaseHelper(getContext(), "myDict.db3",  1);
+        dbHelper = new MyDataBaseHelper(getContext(), "Dict.db3",  1);
         return true;
     }
 
@@ -96,7 +98,7 @@ public class MyContentProvider extends ContentProvider {
                 cursor = db.query("dict", projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case WORD_ITEM:
-                String bookId = uri.getPathSegments().get(1);
+                    String bookId = uri.getPathSegments().get(1);
                 cursor = db.query("dict", projection, "_id = ?", new String[] { bookId }, null, null, sortOrder);
 
                 break;

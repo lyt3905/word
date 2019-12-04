@@ -1,4 +1,4 @@
-package cn.edu.bistu.cs.se.myapplication;
+package cn.edu.bistu.cs.se.testfragment;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package cn.edu.bistu.cs.se.myapplication;
+package cn.edu.bistu.cs.se.testfragment.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

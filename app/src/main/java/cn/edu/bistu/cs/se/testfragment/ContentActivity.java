@@ -1,4 +1,4 @@
-package cn.edu.bistu.cs.se.myapplication;
+package cn.edu.bistu.cs.se.testfragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,7 +24,7 @@ public class ContentActivity extends AppCompatActivity {
         setContentView(R.layout.w_m_s);
         String word = getIntent().getStringExtra("word");
         String mean_word = getIntent().getStringExtra("mean_word");
-         String example_sentence = getIntent().getStringExtra("example_sentence");
+        String example_sentence = getIntent().getStringExtra("example_sentence");
        TextView textView1=findViewById(R.id.textView1);
        TextView textView2=findViewById(R.id.textView2);
        TextView textView3=findViewById(R.id.textView3);

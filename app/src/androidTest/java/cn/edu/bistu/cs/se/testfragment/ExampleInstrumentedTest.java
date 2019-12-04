@@ -1,4 +1,4 @@
-package cn.edu.bistu.cs.se.myapplication;
+package cn.edu.bistu.cs.se.testfragment;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("cn.edu.bistu.cs.se.myapplication", appContext.getPackageName());
+        assertEquals("cn.edu.bistu.cs.se.testfragment", appContext.getPackageName());
     }
 }
