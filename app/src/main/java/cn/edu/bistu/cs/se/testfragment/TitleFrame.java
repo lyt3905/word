@@ -3,8 +3,10 @@ package cn.edu.bistu.cs.se.testfragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -286,7 +288,11 @@ public class TitleFrame extends Fragment {
 
 
         }
-
+        if(id == R.id.news){
+            Intent intent=new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://www.globaltimes.cn/"));
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 

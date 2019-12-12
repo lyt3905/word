@@ -19,4 +19,9 @@
             android:orderInCategory="100"
             android:title="这是帮助"
             app:showAsAction="never" />
+    <item
+            android:id="@+id/news"
+            android:orderInCategory="100"
+            android:title="英语新闻"
+            app:showAsAction="never" />
 </menu>
