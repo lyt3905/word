@@ -197,7 +197,7 @@ public class new_frame extends Fragment {
                                 System.out.println("et=" + key);
 
                                 Cursor cursor = dbHelper.getReadableDatabase().rawQuery(
-                                        "SELECT * FROM dict WHERE word LIKE ? OR mean_word LIKE ? OR example_sentence LIKE ?",
+                                        "SELECT * FROM new WHERE word LIKE ? OR mean_word LIKE ? OR example_sentence LIKE ?",
                                         new String[]{"%" + key + "%", "%" + key + "%", "%" + key + "%"});
 
                                 result.clear();
