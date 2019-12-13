@@ -24,4 +24,10 @@
             android:orderInCategory="100"
             android:title="英语新闻"
             app:showAsAction="never" />
+
+    <item
+            android:id="@+id/newword"
+            android:orderInCategory="100"
+            android:title="生词本"
+            app:showAsAction="never" />
 </menu>

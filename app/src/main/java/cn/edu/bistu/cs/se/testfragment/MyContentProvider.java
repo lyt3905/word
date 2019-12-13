@@ -83,7 +83,7 @@ public class MyContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         // TODO: Implement this to initialize your content provider on startup.
-        dbHelper = new MyDataBaseHelper(getContext(), "Dict.db3",  1);
+        dbHelper = MyDataBaseHelper.getInstance(getContext());
         return true;
     }
 

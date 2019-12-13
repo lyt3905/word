@@ -1,6 +1,5 @@
 package cn.edu.bistu.cs.se.testfragment;
 
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,7 +30,7 @@ import java.util.Map;
 
 import cn.edu.bistu.cs.se.testfragment.db.MyDataBaseHelper;
 
-public class TitleFrame extends Fragment {
+public class new_frame extends Fragment {
     private boolean isTwoPane;
     EditText et;
     private static MyDataBaseHelper dbHelper;
@@ -46,10 +45,10 @@ public class TitleFrame extends Fragment {
         sqlDB = dbHelper.getReadableDatabase();;
         View view = inflater.inflate(R.layout.list, container, false);
         listView = view.findViewById(R.id.listView1);
-        setHasOptionsMenu(true);
+
         registerForContextMenu(listView);
         firstListview();
-        Log.d("mytag","firstListview");
+
         return view;
     }
 
@@ -93,7 +92,7 @@ public class TitleFrame extends Fragment {
         // 加载xml中的上下文菜单
 
         MenuInflater menuInflater = getActivity().getMenuInflater();
-        menuInflater.inflate(R.menu.longtimepress, menu);
+        menuInflater.inflate(R.menu.longtimepressfornew, menu);
 
         super.onCreateContextMenu(menu, v, menuInfo);
     }
@@ -110,6 +109,10 @@ public class TitleFrame extends Fragment {
         String example_sentence=map.get("example_sentence")+"";
         switch (item.getItemId()) {
             case R.id.edit:
+                System.out.println("id="+id);
+                System.out.println("word="+word);
+                System.out.println("mean_word="+mean_word);
+                System.out.println("example_sentence="+example_sentence);
 
                 android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 final LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -134,7 +137,7 @@ public class TitleFrame extends Fragment {
                         String strword_mean = mean_wordet.getText().toString();
                         String strexample_sentence=example_sentenceet.getText().toString();
 
-                        sqlDB.execSQL("update dict set word =? , mean_word =? , example_sentence =? where _id = ? ",
+                        sqlDB.execSQL("update new set word =? , mean_word =? , example_sentence =? where _id = ? ",
                                 new Object[] {strword, strword_mean, strexample_sentence,id});
                         System.out.println("after-id="+id);
                         System.out.println("after-strword="+strword);
@@ -169,7 +172,7 @@ public class TitleFrame extends Fragment {
                 builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        sqlDB.execSQL("delete from dict where _id=?",
+                        sqlDB.execSQL("delete from new where _id=?",
                                 new String[]{id+""});
                         firstListview();
                         Toast.makeText(getContext(),"删除成功",Toast.LENGTH_SHORT).show();
@@ -179,11 +182,6 @@ public class TitleFrame extends Fragment {
                 builder1.show();
                 AlertDialog alert1=builder1.create();
 
-                break;
-            case R.id.addtonew:
-                sqlDB.execSQL("INSERT INTO new VALUES(NULL,?,?,?)", new String[] {
-                        word, mean_word, example_sentence});
-                Toast.makeText(getContext(), "添加到生词本成功", Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;
@@ -196,54 +194,12 @@ public class TitleFrame extends Fragment {
 
 
 
-    //toolbar相关代码
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_main, menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.add) {
+
+
+       /* if (id == R.id.search) {
+            et = new EditText(getActivity());
             android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            final LayoutInflater inflater = getActivity().getLayoutInflater();
-            final View view_custom = inflater.inflate(R.layout.add, null,false);
-            builder.setView(view_custom);
-            builder.setCancelable(true);
-            AlertDialog alert=builder.create();
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    EditText word =view_custom.findViewById(R.id.word);
-                    EditText word_mean=view_custom.findViewById(R.id.word_mean);
-                    EditText example_sentence =view_custom.findViewById(R.id.example_sentence);
-                    String strword = word.getText().toString();
-                    String strword_mean = word_mean.getText().toString();
-                    String strexample_sentence=example_sentence.getText().toString();
-
-                    sqlDB.execSQL("INSERT INTO dict VALUES(NULL,?,?,?)", new String[] {
-                            strword, strword_mean, strexample_sentence});
-
-                    Toast.makeText(getContext(), "插入成功", Toast.LENGTH_LONG).show();
-                    firstListview();
-
-
-                }
-            });
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-            builder.show();
-            return true;
-        }
-        if (id == R.id.search){
-            et=new EditText(getActivity());
-            android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            AlertDialog alertDialog=builder.setView(et)
+            AlertDialog alertDialog = builder.setView(et)
                     .setTitle("搜索单词")
                     .setPositiveButton("搜索", new DialogInterface.OnClickListener() {
                         @Override
@@ -259,7 +215,7 @@ public class TitleFrame extends Fragment {
                             result.clear();
                             while (cursor.moveToNext()) {
                                 Map<String, Object> map = new HashMap<String, Object>();
-                                map.put("id",cursor.getInt(0));
+                                map.put("id", cursor.getInt(0));
                                 map.put("word", cursor.getString(1));
                                 map.put("mean_word", cursor.getString(2));
                                 map.put("example_sentence", cursor.getString(3));
@@ -276,36 +232,14 @@ public class TitleFrame extends Fragment {
             alertDialog.show();
 
 
-        }
-        if(id == R.id.help){
-            TextView tv=new TextView(getActivity());
-            tv.setText("帮助内容");
-            android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            AlertDialog alertDialog=builder.setView(et)
-                    .setTitle("这是帮助")
-                    .setView(tv)
-                    .create();
-            alertDialog.show();
+        }*/
 
-
-        }
-        if(id == R.id.news){
-            Intent intent=new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("https://www.globaltimes.cn/"));
-            startActivity(intent);
-        }
-        if(id == R.id.newword){
-            Intent intent=new Intent(getActivity(),newword.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 
     public void firstListview(){
         String key ="";
         Cursor cursor = dbHelper.getReadableDatabase().rawQuery(
-                "SELECT * FROM dict WHERE word LIKE ? OR mean_word LIKE ? OR example_sentence LIKE ?",
+                "SELECT * FROM new WHERE word LIKE ? OR mean_word LIKE ? OR example_sentence LIKE ?",
                 new String[]{"%" + key + "%", "%" + key + "%", "%" + key + "%"});
         result.clear();
         while (cursor.moveToNext()) {

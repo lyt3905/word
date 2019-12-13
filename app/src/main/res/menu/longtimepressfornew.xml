@@ -12,11 +12,7 @@
             android:orderInCategory="100"
 
             android:title="删除"/>
-    <item
-            android:id="@+id/addtonew"
-            android:orderInCategory="100"
 
-            android:title="添加到生词本"/>
 
 
 </menu>

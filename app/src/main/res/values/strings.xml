@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TestFragment</string>
+    <string name="title_activity_newword">newword</string>
 </resources>
