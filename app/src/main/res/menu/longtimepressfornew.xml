@@ -12,6 +12,11 @@
             android:orderInCategory="100"
 
             android:title="删除"/>
+    <item
+            android:id="@+id/searchinnew"
+            android:orderInCategory="100"
+
+            android:title="删除"/>
 
 
 

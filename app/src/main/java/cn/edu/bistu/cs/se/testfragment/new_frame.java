@@ -183,6 +183,44 @@ public class new_frame extends Fragment {
                 AlertDialog alert1=builder1.create();
 
                 break;
+            case R.id.searchinnew:
+            {
+                et = new EditText(getActivity());
+                android.app.AlertDialog.Builder builder3 = new AlertDialog.Builder(getActivity());
+                AlertDialog alertDialog = builder3.setView(et)
+                        .setTitle("搜索单词")
+                        .setPositiveButton("搜索", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                String key = et.getText().toString();
+                                System.out.println("et=" + key);
+
+                                Cursor cursor = dbHelper.getReadableDatabase().rawQuery(
+                                        "SELECT * FROM dict WHERE word LIKE ? OR mean_word LIKE ? OR example_sentence LIKE ?",
+                                        new String[]{"%" + key + "%", "%" + key + "%", "%" + key + "%"});
+
+                                result.clear();
+                                while (cursor.moveToNext()) {
+                                    Map<String, Object> map = new HashMap<String, Object>();
+                                    map.put("id", cursor.getInt(0));
+                                    map.put("word", cursor.getString(1));
+                                    map.put("mean_word", cursor.getString(2));
+                                    map.put("example_sentence", cursor.getString(3));
+                                    result.add(map);
+                                }
+                                SimpleAdapter simpleAdapter = new SimpleAdapter(
+                                        getContext(), result, R.layout.line,
+                                        new String[]{"word", "mean_word", "example_sentence"},
+                                        new int[]{R.id.textView1, R.id.textView2, R.id.textView3});
+                                listView.setAdapter(simpleAdapter);
+
+                            }
+                        }).create();
+                alertDialog.show();
+
+
+            }
             default:
                 break;
         }
@@ -196,43 +234,7 @@ public class new_frame extends Fragment {
 
 
 
-       /* if (id == R.id.search) {
-            et = new EditText(getActivity());
-            android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            AlertDialog alertDialog = builder.setView(et)
-                    .setTitle("搜索单词")
-                    .setPositiveButton("搜索", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                            String key = et.getText().toString();
-                            System.out.println("et=" + key);
-
-                            Cursor cursor = dbHelper.getReadableDatabase().rawQuery(
-                                    "SELECT * FROM dict WHERE word LIKE ? OR mean_word LIKE ? OR example_sentence LIKE ?",
-                                    new String[]{"%" + key + "%", "%" + key + "%", "%" + key + "%"});
-
-                            result.clear();
-                            while (cursor.moveToNext()) {
-                                Map<String, Object> map = new HashMap<String, Object>();
-                                map.put("id", cursor.getInt(0));
-                                map.put("word", cursor.getString(1));
-                                map.put("mean_word", cursor.getString(2));
-                                map.put("example_sentence", cursor.getString(3));
-                                result.add(map);
-                            }
-                            SimpleAdapter simpleAdapter = new SimpleAdapter(
-                                    getContext(), result, R.layout.line,
-                                    new String[]{"word", "mean_word", "example_sentence"},
-                                    new int[]{R.id.textView1, R.id.textView2, R.id.textView3});
-                            listView.setAdapter(simpleAdapter);
-
-                        }
-                    }).create();
-            alertDialog.show();
-
-
-        }*/
 
 
 
